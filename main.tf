@@ -5,7 +5,7 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 locals {
-  cluster_name = "education-eks-${random_string.suffix.result}"
+  cluster_name = "tfFeb-eks-${random_string.suffix.result}"
 }
 
 resource "random_string" "suffix" {
@@ -17,7 +17,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.19.0"
 
-  name = "education-vpc"
+  name = "tfFeb-vpc"
 
   cidr = "10.0.0.0/16"
   azs  = slice(data.aws_availability_zones.available.names, 0, 3)
@@ -58,7 +58,7 @@ module "eks" {
 
   eks_managed_node_groups = {
     one = {
-      name = "node-group-1"
+      name = "node-group-tf1"
 
       instance_types = ["t3.small"]
 
@@ -68,7 +68,7 @@ module "eks" {
     }
 
     two = {
-      name = "node-group-2"
+      name = "node-group-tf2"
 
       instance_types = ["t3.small"]
 
